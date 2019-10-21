@@ -8,7 +8,7 @@ module.exports = {
     "autoprefixer": {},
     "postcss-pxtorem": {
       // 需要与font-size基准值相同
-      "rootValue": 20.7,
+      "rootValue": 16.7,
       "propList": ["*"],
       selectorBlackList: ["van-"]
     }
