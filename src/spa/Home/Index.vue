@@ -1,5 +1,5 @@
 <template>
-  <div class="Home">
+  <div id="Index">
     <div class="box">
       <span ref="col1" class="list list-1">
         <img v-for="(item,index) in list1" :key="index" class="item" :src="item">
@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: "Home",
+  name: "Index",
   data() {
     return {
       list: [],
@@ -32,8 +32,6 @@ export default {
   },
   mounted: function() {
     this.init();
-    // 内容部分
-    // this.$refs.yBodyBody.style.height = Number(document.documentElement.clientHeight) - 176 + "px";
     this.getPicList();
   },
   methods: {
@@ -71,7 +69,6 @@ export default {
       let height2 = getHeight("col2");
       let height3 = getHeight("col3");
       let height4 = getHeight("col4");
-      console.log(height1, height2, height3, height4);
       switch (Math.min(height1, height2, height3, height4)) {
         case height1:
           return "list1";
@@ -93,7 +90,7 @@ export default {
 }
 
 // 自定义样式top
-.Home {
+#Index {
   .box {
     width: 1179px;
     margin: auto;
@@ -109,9 +106,9 @@ export default {
     width: 100%;
     background-color: rgba(8, 7, 7, 0.1);
     color: white;
-    padding: 15px;
+    padding: 10px;
     box-sizing: border-box;
-    border-radius: 50px;
+    border-radius: 30px;
   }
 }
 // 自定义样式buttom
