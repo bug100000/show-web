@@ -1,6 +1,6 @@
 // 引入功能、组件
 import Vue from 'vue'
-import Axios from 'axios'
+import axios from './utils/axios'
 import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
 
@@ -19,6 +19,7 @@ import './assets/css/common.css'
 
 // 配置Vue
 Vue.config.productionTip = false
+Vue.prototype.$axios = axios
 Vue.use(ViewUI);
 
 /* eslint-disable no-new */
@@ -27,7 +28,6 @@ new Vue({
   el: '#app',
   commonFun,
   commonVar,
-  Axios,
   router,
   render: h => h(App)
 })
