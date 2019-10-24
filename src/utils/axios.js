@@ -10,7 +10,6 @@ import config from './config.js'
 // axios默认配置
 axios.defaults.timeout = 10000;   // 超时时间
 axios.defaults.baseURL = config.domain;  // 默认地址
-console.log(config.domain);
 
 //整理数据
 axios.defaults.transformRequest = function (data) {

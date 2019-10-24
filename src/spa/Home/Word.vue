@@ -59,6 +59,8 @@ export default {
   }
   .word-title{
     margin-bottom: 20px;
+    // border-bottom: 1px solid gray;
+    text-decoration-line: underline;
   }
   .word-content {
     white-space: pre-line;

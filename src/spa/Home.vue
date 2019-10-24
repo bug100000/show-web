@@ -19,25 +19,35 @@
         <MenuItem name="4" to="/Home/Audio">
           <Icon type="md-volume-up"/>音频
         </MenuItem>
-        <Submenu name="5">
+        
+        <Submenu class="float-right" name="6">
           <template slot="title">
             <Icon type="md-settings"/>综合设置
           </template>
           <MenuGroup title="用户">
-            <MenuItem name="5-1">个人资料</MenuItem>
-            <MenuItem name="5-2">修改密码</MenuItem>
-            <MenuItem name="5-3">投诉建议</MenuItem>
+            <MenuItem name="6-1">个人资料</MenuItem>
+            <MenuItem name="6-2">修改密码</MenuItem>
+            <MenuItem name="6-3">投诉建议</MenuItem>
           </MenuGroup>
           <MenuGroup title="主题颜色">
             <RadioGroup v-model="theme1">
-              <MenuItem name="5-4">
+              <MenuItem name="6-4">
                 <Radio label="light"></Radio>
               </MenuItem>
-              <MenuItem name="5-5">
+              <MenuItem name="6-5">
                 <Radio label="dark"></Radio>
               </MenuItem>
             </RadioGroup>
           </MenuGroup>
+        </Submenu>
+        <Submenu class="float-right" name="5">
+          <template slot="title">
+            <Icon type="md-settings"/>发布
+          </template>
+          <MenuItem name="5-1">图片</MenuItem>
+          <MenuItem name="5-2">文字</MenuItem>
+          <MenuItem name="5-3">视频</MenuItem>
+          <MenuItem name="5-4">音频</MenuItem>
         </Submenu>
       </Menu>
       <br>
@@ -51,7 +61,7 @@ export default {
   name: "Home",
   data() {
     return {
-      theme1: "dark"
+      theme1: "light"
     };
   },
   mounted: function() {
@@ -73,30 +83,22 @@ export default {
 
 // 自定义样式top
 #Home {
-  //   .logo {
-  //     display: inline-block;
-  //     position: absolute;
-  //     top: 0px;
-  //     left: 20px;
-  //     z-index: 901;
-  //     .logo-img {
-  //       display: inline-block;
-  //       width: 60px;
-  //     }
-  //   }
+  .float-right {
+    float: right;
+  }
   .home-box {
     min-height: 100vh;
-    .placeholder{
-        height: 60px;
+    .placeholder {
+      height: 60px;
     }
-    .menu-box{
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
+    .menu-box {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
     }
-    .ivu-menu-dark{
-        background-color: #1f2f52;
+    .ivu-menu-dark {
+      background-color: #1f2f52;
     }
   }
   .light {
