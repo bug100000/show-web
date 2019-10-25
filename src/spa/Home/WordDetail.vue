@@ -25,8 +25,7 @@ export default {
       this.$axios
         .get(`/api/word/getDetail?id=${this.$route.query.id}`)
         .then(function(res) {
-          console.log(res);
-          _this.data = res.data.data;
+          _this.data = res.data;
         })
         .catch(function(err) {
           console.log(err);
@@ -50,6 +49,7 @@ export default {
   }
   .content {
     white-space: pre-line;
+    padding-bottom: 20px;
   }
 }
 // 自定义样式buttom

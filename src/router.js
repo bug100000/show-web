@@ -41,6 +41,10 @@ export default new Router({
         path: "/Home/WordDetail",
         name: "WordDetail",
         component: loadView("Home/WordDetail"),
+      },{
+        path: "/Home/WordAdd",
+        name: "WordAdd",
+        component: loadView("Home/WordAdd"),
       }]
     }
   ]

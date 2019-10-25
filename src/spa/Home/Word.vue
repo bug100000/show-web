@@ -1,8 +1,8 @@
 <template>
   <div id="Word">
     <div class="word-list">
-      <div v-for="(item, index) in list" :key="index" class="word-item" @click="routerPush('/Home/wordDetail', {id: item.id})">
-        <h3 class="word-title">{{item.title}}</h3>
+      <div v-for="(item, index) in list" :key="index" class="word-item">
+        <h3 class="word-title" @click="routerPush('/Home/wordDetail', {id: item.id})">{{item.title}}</h3>
         <p class="word-content">{{item.content}}</p>
       </div>
     </div>
@@ -33,8 +33,7 @@ export default {
       this.$axios
         .get("/api/word/getList")
         .then(function(res) {
-          console.log(res);
-          _this.list = res.data.data;
+          _this.list = res.data;
         })
         .catch(function(err) {
           console.log(err);
@@ -58,9 +57,11 @@ export default {
     margin-top: 20px;
   }
   .word-title{
+    display: inline-block;
     margin-bottom: 20px;
     // border-bottom: 1px solid gray;
     text-decoration-line: underline;
+    cursor: pointer;
   }
   .word-content {
     white-space: pre-line;

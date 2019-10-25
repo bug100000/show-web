@@ -32,7 +32,6 @@ axios.interceptors.request.use(
         //     config.headers.token = cookie.get("token");
         //     config.headers.name = cookie.get("name");
         // }
-
         return config;
     },
     error => {
@@ -44,13 +43,12 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         if (response.data.resultCode == "404") {
-            console.log("response.data.resultCode是404")
             // 返回 错误代码-1 清除ticket信息并跳转到登录页面
             //      cookie.del("ticket")
             //      window.location.href='http://login.com'
-            return
+            return response.data;
         } else {
-            return response;
+            return response.data;
         }
     },
     error => {
