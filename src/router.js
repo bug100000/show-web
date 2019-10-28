@@ -45,6 +45,10 @@ export default new Router({
         path: "/Home/WordAdd",
         name: "WordAdd",
         component: loadView("Home/WordAdd"),
+      },{
+        path: "/Home/PictureUpload",
+        name: "PictureUpload",
+        component: loadView("Home/PictureUpload"),
       }]
     }
   ]

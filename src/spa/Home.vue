@@ -44,7 +44,7 @@
           <template slot="title">
             <Icon type="md-settings"/>发布
           </template>
-          <MenuItem name="5-1">图片</MenuItem>
+          <MenuItem name="5-1" to="/Home/PictureUpload">图片</MenuItem>
           <MenuItem name="5-2" to="/Home/WordAdd">文字</MenuItem>
           <MenuItem name="5-3">视频</MenuItem>
           <MenuItem name="5-4">音频</MenuItem>
