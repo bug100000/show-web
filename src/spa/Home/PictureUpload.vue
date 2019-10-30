@@ -11,10 +11,11 @@
         :on-format-error="handleFormatError"
         :on-exceeded-size="handleMaxSize"
         :before-upload="handleBeforeUpload"
+        name="file"
         multiple
         type="drag"
-        action="//jsonplaceholder.typicode.com/posts/"
-        style="display: inline-block;width:58px;"
+        :action="domain+`/api/picture/upload`"
+        style="display: inline-block;width: 58px;"
       >
         <div style="padding: 20px 0;">
           <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
@@ -23,9 +24,10 @@
       </Upload>
     </div>
     <div class="from-item">
+      <!-- 已上传图片列表 -->
       <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
         <template v-if="item.status === 'finished'">
-          <img :src="item.url">
+          <img :src="domain + item.url">
           <div class="demo-upload-list-cover">
             <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
             <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
@@ -35,6 +37,7 @@
           <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
         </template>
       </div>
+      <!-- 弹窗显示放大图片 -->
       <Modal title="View Image" v-model="visible">
         <img
           :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'"
@@ -47,141 +50,65 @@
       <!-- <span class="submit-laber">提交：</span> -->
       <Button type="default" long @click="submit">提交</Button>
     </div>
+    <Spin size="large" fix v-if="spinShow"></Spin>
   </div>
 </template>
 
 <script>
+import config from "../../utils/config.js"
 export default {
   name: "PictureUpload",
   data() {
     return {
-      defaultList: [
-        {
-          name: "a42bdcc1178e62b4694c830f028db5c0",
-          url:
-            "https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar"
-        },
-        {
-          name: "bc7521e033abdd1e92222d733590f104",
-          url:
-            "https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar"
-        },
-        {
-          name: "bc7521e033abdd1e92222d733590f104",
-          url:
-            "https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar"
-        },
-        {
-          name: "bc7521e033abdd1e92222d733590f104",
-          url:
-            "https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar"
-        },
-        {
-          name: "bc7521e033abdd1e92222d733590f104",
-          url:
-            "https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar"
-        },
-        {
-          name: "bc7521e033abdd1e92222d733590f104",
-          url:
-            "https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar"
-        },
-        {
-          name: "bc7521e033abdd1e92222d733590f104",
-          url:
-            "https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar"
-        },
-        {
-          name: "bc7521e033abdd1e92222d733590f104",
-          url:
-            "https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar"
-        },
-        {
-          name: "bc7521e033abdd1e92222d733590f104",
-          url:
-            "https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar"
-        },
-        {
-          name: "bc7521e033abdd1e92222d733590f104",
-          url:
-            "https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar"
-        },
-        {
-          name: "bc7521e033abdd1e92222d733590f104",
-          url:
-            "https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar"
-        },
-        {
-          name: "bc7521e033abdd1e92222d733590f104",
-          url:
-            "https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar"
-        }
-      ],
+      defaultList: [],
       imgName: "",
       visible: false,
-      uploadList: []
+      uploadList: [],
+      domain: config.domain,
+      spinShow: false
     };
   },
   mounted: function() {
     this.uploadList = this.$refs.upload.fileList;
   },
   methods: {
-    handleView(name) {
-      this.imgName = name;
-      this.visible = true;
-    },
-    handleRemove(file) {
-      const fileList = this.$refs.upload.fileList;
-      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-    },
+    // 图片上传成功
     handleSuccess(res, file) {
-      file.url =
-        "https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar";
-      file.name = "7eb99afb9d5f317c912f08b5212fd69a";
-    },
-    handleFormatError(file) {
-      this.$Notice.warning({
-        title: "The file format is incorrect",
-        desc:
-          "File format of " +
-          file.name +
-          " is incorrect, please select jpg or png."
-      });
-    },
-    handleMaxSize(file) {
-      this.$Notice.warning({
-        title: "Exceeding file size limit",
-        desc: "File  " + file.name + " is too large, no more than 2M."
-      });
-    },
-    handleBeforeUpload() {
-      const check = this.uploadList.length < 5;
-      if (!check) {
+      if (res.code == 200) {
+        file.url = res.data;
+        let name = res.data.split("/");
+        file.name = name[name.length - 1];
+      } else {
         this.$Notice.warning({
-          title: "Up to five pictures can be uploaded."
+          title: res.msg
         });
       }
-      return check;
     },
+    // 提交已上传图片的地址
     submit() {
       let _this = this;
-      if (!this.title) {
-        _this.$Message.error("标题不能为空");
+      console.log(this.defaultList);
+      console.log(this.uploadList);
+      if (this.uploadList.length == 0) {
+        _this.$Message.error("至少提交一张图片");
+        return false;
       }
-      if (!this.content) {
-        _this.$Message.error("内容不能为空");
+      let pictures = [];
+      for (let i = 0; i < this.uploadList.length; i++) {
+        pictures.push({
+          url: this.uploadList[i].url,
+          size: this.uploadList[i].size,
+          name: this.uploadList[i].name
+        })
       }
-      let data = {
-        title: this.title,
-        content: this.content
-      };
+      this.spinShow = true;
       this.$axios
-        .post(`/api/word/add`, data)
+        .post(`/api/picture/add`, { pictures })
         .then(function(res) {
           if (res.code == 200) {
             _this.$Message.success(res.msg);
             setTimeout(function() {
-              _this.routerPush("/Home/Word");
+              _this.routerPush("/Home/Index");
             }, 2000);
           } else {
             _this.$Message.error(res.msg);
@@ -191,8 +118,47 @@ export default {
           console.log(err);
         });
     },
+    // 放大查看已上传图片
+    handleView(name) {
+      this.imgName = name;
+      this.visible = true;
+    },
+    // 移除已上传图片
+    handleRemove(file) {
+      const fileList = this.$refs.upload.fileList;
+      console.log(file);
+      console.log(fileList);
+      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+    },
     routerPush(hash) {
       this.$router.push(hash);
+    },
+    // 图片格式校验
+    handleFormatError(file) {
+      this.$Notice.warning({
+        title: "The file format is incorrect",
+        desc:
+          "File format of " +
+          file.name +
+          " is incorrect, please select jpg or png."
+      });
+    },
+    // 图片大小校验
+    handleMaxSize(file) {
+      this.$Notice.warning({
+        title: "Exceeding file size limit",
+        desc: "File  " + file.name + " is too large, no more than 2M."
+      });
+    },
+    // 一次上传图片数量校验
+    handleBeforeUpload() {
+      // const check = this.uploadList.length < 10;
+      // if (!check) {
+      //   this.$Notice.warning({
+      //     title: "一次只能选择一张图片"
+      //   });
+      // }
+      // return check;
     }
   }
 };
@@ -207,12 +173,13 @@ export default {
 #PictureUpload {
   width: 1000px;
   margin: auto;
+  position: relative;
   .from-item {
     display: flex;
     align-items: flex-start;
     margin-top: 20px;
     flex-wrap: wrap;
-    .ivu-upload{
+    .ivu-upload {
       width: 100% !important;
     }
     .input {

@@ -18,6 +18,7 @@
       <span class="submit-laber">提交：</span>
       <Button type="default" long @click="submit">提交</Button>
     </div>
+    <Spin size="large" fix v-if="spinShow"></Spin>
   </div>
 </template>
 
@@ -28,7 +29,8 @@ export default {
     return {
       data: "",
       title: "",
-      content: ""
+      content: "",
+      spinShow: false
     };
   },
   mounted: function() {},
@@ -45,6 +47,7 @@ export default {
         title: this.title,
         content: this.content
       };
+      this.spinShow = true;
       this.$axios
         .post(`/api/word/add`, data)
         .then(function(res) {
@@ -77,6 +80,7 @@ export default {
 #WordAdd {
   width: 1000px;
   margin: auto;
+  position: relative;
   .from-item {
     display: flex;
     align-items: flex-start;

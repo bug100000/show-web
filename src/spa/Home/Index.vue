@@ -2,22 +2,43 @@
   <div id="Index">
     <div class="box">
       <span ref="col1" class="list list-1">
-        <img v-for="(item,index) in list1" :key="index" class="item" :src="item">
+        <img
+          v-for="(item,index) in list1"
+          :key="index"
+          class="item"
+          :src="/http/.test(item.url) ? item.url : domain+item.url"
+        >
       </span>
       <span ref="col2" class="list list-2">
-        <img v-for="(item,index) in list2" :key="index" class="item" :src="item">
+        <img
+          v-for="(item,index) in list2"
+          :key="index"
+          class="item"
+          :src="/http/.test(item.url) ? item.url : domain+item.url"
+        >
       </span>
       <span ref="col3" class="list list-3">
-        <img v-for="(item,index) in list3" :key="index" class="item" :src="item">
+        <img
+          v-for="(item,index) in list3"
+          :key="index"
+          class="item"
+          :src="/http/.test(item.url) ? item.url : domain+item.url"
+        >
       </span>
       <span ref="col4" class="list list-4">
-        <img v-for="(item,index) in list4" :key="index" class="item" :src="item">
+        <img
+          v-for="(item,index) in list4"
+          :key="index"
+          class="item"
+          :src="/http/.test(item.url) ? item.url : domain+item.url"
+        >
       </span>
     </div>
   </div>
 </template>
 
 <script>
+import config from "../../utils/config.js"
 export default {
   name: "Index",
   data() {
@@ -27,26 +48,35 @@ export default {
       list1: [],
       list2: [],
       list3: [],
-      list4: []
+      list4: [],
+      domain: config.domain
     };
   },
   mounted: function() {
-    this.init();
     this.getPicList();
   },
   methods: {
-    init() {},
     Jump(hash) {
       this.$router.push(hash);
     },
     getPicList() {
-      let list = [];
-      for (let i = 1; i < 23; i++) {
-        list.push(`http://47.104.165.184/images/picture (${i}).jpg`);
-      }
-      this.round = list;
-      this.list = this.list.concat(list);
-      this.appendPic(0);
+      // let list = [];
+      // for (let i = 1; i < 23; i++) {
+      //   list.push(`http://47.104.165.184/images/picture (${i}).jpg`);
+      // }
+      let _this = this;
+      this.$axios
+        .get("/api/picture/getList")
+        .then(function(res) {
+          // round单次请求图片列表
+          _this.round = res.data;
+          // list总图片列表
+          _this.list = _this.list.concat(res.data);
+          _this.appendPic(0);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     },
     appendPic(index) {
       let _this = this;
