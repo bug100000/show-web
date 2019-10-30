@@ -29,7 +29,7 @@
         <template v-if="item.status === 'finished'">
           <img :src="domain + item.url">
           <div class="demo-upload-list-cover">
-            <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
+            <Icon type="ios-eye-outline" @click.native="handleView(item.url)"></Icon>
             <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
           </div>
         </template>
@@ -40,7 +40,7 @@
       <!-- 弹窗显示放大图片 -->
       <Modal title="View Image" v-model="visible">
         <img
-          :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'"
+          :src="domain + imgUrl"
           v-if="visible"
           style="width: 100%"
         >
@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       defaultList: [],
-      imgName: "",
+      imgUrl: "",
       visible: false,
       uploadList: [],
       domain: config.domain,
@@ -119,8 +119,8 @@ export default {
         });
     },
     // 放大查看已上传图片
-    handleView(name) {
-      this.imgName = name;
+    handleView(url) {
+      this.imgUrl = url;
       this.visible = true;
     },
     // 移除已上传图片
