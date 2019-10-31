@@ -1,6 +1,14 @@
 <template>
   <div id="Video">
-      <video class="video-item" src="http://47.104.165.184/videos/scenery.mp4" controls="controls"></video>
+    <div class="video-list">
+      <div class="video-item">
+        <h3 class="video-title" @click="routerPush('/Home/videoDetail')">视频标题</h3>
+      </div>
+      <div v-for="(item, index) in list" :key="index" class="video-item">
+        <h3 class="video-title" @click="routerPush('/Home/videoDetail', {id: item.id})">{{item.title}}</h3>
+      </div>
+    </div>
+    <div class="footer">.</div>
   </div>
 </template>
 
@@ -9,21 +17,29 @@ export default {
   name: "Video",
   data() {
     return {
-      list: [],
-      round: [],
-      list1: [],
-      list2: [],
-      list3: [],
-      list4: []
+      list: []
     };
   },
   mounted: function() {
-    this.init();
+    this.getvideoList();
   },
   methods: {
-    init() {},
-    Jump(hash) {
-      this.$router.push(hash);
+    routerPush(path, query) {
+      this.$router.push({
+        path,
+        query
+      });
+    },
+    getVideoideoList() {
+      let _this = this;
+      this.$axios
+        .get("/api/video/getList")
+        .then(function(res) {
+          _this.list = res.data;
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     }
   }
 };
@@ -36,12 +52,35 @@ export default {
 
 // 自定义样式top
 #Video {
-    .video-item{
-        width: 1000px;
-        display: block;
-        margin: auto;
-        margin-top: 20px;
-    }
+  .video-item {
+    width: 1000px;
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+  }
+  .video-title{
+    display: inline-block;
+    margin-bottom: 20px;
+    // border-bottom: 1px solid gray;
+    text-decoration-line: underline;
+    cursor: pointer;
+  }
+  .video-content {
+    white-space: pre-line;
+    max-height: 100px;
+    //超出省略
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    margin-bottom: 50px;
+  }
+  .footer{
+    margin: auto;
+    text-align: center;
+    visibility: hidden;
+  }
 }
 // 自定义样式buttom
 </style>

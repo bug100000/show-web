@@ -30,6 +30,10 @@ export default new Router({
         name: "Video",
         component: loadView("Home/Video"),
       },{
+        path: "/Home/VideoDetail",
+        name: "VideoDetail",
+        component: loadView("Home/VideoDetail"),
+      },{
         path: "/Home/Audio",
         name: "Audio",
         component: loadView("Home/Audio"),

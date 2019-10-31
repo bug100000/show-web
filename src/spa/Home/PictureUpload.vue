@@ -14,7 +14,7 @@
         name="file"
         multiple
         type="drag"
-        :action="domain+`/api/picture/upload`"
+        :action="domain+`/api/base/upload`"
         style="display: inline-block;width: 58px;"
       >
         <div style="padding: 20px 0;">
@@ -87,8 +87,6 @@ export default {
     // 提交已上传图片的地址
     submit() {
       let _this = this;
-      console.log(this.defaultList);
-      console.log(this.uploadList);
       if (this.uploadList.length == 0) {
         _this.$Message.error("至少提交一张图片");
         return false;
