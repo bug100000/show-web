@@ -34,9 +34,21 @@ export default new Router({
         name: "VideoDetail",
         component: loadView("Home/VideoDetail"),
       },{
+        path: "/Home/VideoUpload",
+        name: "VideoUpload",
+        component: loadView("Home/VideoUpload"),
+      },{
         path: "/Home/Audio",
         name: "Audio",
         component: loadView("Home/Audio"),
+      },{
+        path: "/Home/AudioDetail",
+        name: "AudioDetail",
+        component: loadView("Home/AudioDetail"),
+      },{
+        path: "/Home/AudioUpload",
+        name: "AudioUpload",
+        component: loadView("Home/AudioUpload"),
       },{
         path: "/Home/Word",
         name: "Word",

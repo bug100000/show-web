@@ -1,11 +1,13 @@
 <template>
   <div id="Video">
     <div class="video-list">
-      <div class="video-item">
-        <h3 class="video-title" @click="routerPush('/Home/videoDetail')">视频标题</h3>
-      </div>
       <div v-for="(item, index) in list" :key="index" class="video-item">
-        <h3 class="video-title" @click="routerPush('/Home/videoDetail', {id: item.id})">{{item.title}}</h3>
+        <h3
+          class="video-title"
+          @click="routerPush('/Home/videoDetail', {id: item.id})"
+        >{{item.title}}</h3>
+        <br>
+        <video class="item" :src="/http/.test(item.url) ? item.url : domain + item.url" controls="controls"></video>
       </div>
     </div>
     <div class="footer">.</div>
@@ -21,7 +23,7 @@ export default {
     };
   },
   mounted: function() {
-    this.getvideoList();
+    this.getVideoList();
   },
   methods: {
     routerPush(path, query) {
@@ -30,7 +32,7 @@ export default {
         query
       });
     },
-    getVideoideoList() {
+    getVideoList() {
       let _this = this;
       this.$axios
         .get("/api/video/getList")
@@ -53,12 +55,15 @@ export default {
 // 自定义样式top
 #Video {
   .video-item {
-    width: 1000px;
+    width: 800px;
     display: block;
     margin: auto;
     margin-top: 20px;
+    .item{
+      width: 300px;
+    }
   }
-  .video-title{
+  .video-title {
     display: inline-block;
     margin-bottom: 20px;
     // border-bottom: 1px solid gray;
@@ -76,7 +81,7 @@ export default {
     -webkit-box-orient: vertical;
     margin-bottom: 50px;
   }
-  .footer{
+  .footer {
     margin: auto;
     text-align: center;
     visibility: hidden;

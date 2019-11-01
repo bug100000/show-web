@@ -1,8 +1,8 @@
 <template>
-  <div id="VideoDetail">
-    <div class="video-box">
-      <h3 class="video-item">{{data.title ? data.title : '视频标题'}}</h3>
-      <video class="video-item" :src="/http/.test(data.url) ? data.url : domain + data.url" controls="controls"></video>
+  <div id="AudioDetail">
+    <div class="audio-box">
+      <h3 class="audio-item">{{data.title ? data.title : '视频标题'}}</h3>
+      <audio class="audio-item" :src="/http/.test(data.url) ? data.url : domain + data.url" controls="controls"></audio>
     </div>
   </div>
 </template>
@@ -10,7 +10,7 @@
 <script>
 import config from "../../utils/config.js"
 export default {
-  name: "VideoDetail",
+  name: "AudioDetail",
   data() {
     return {
       data: {},
@@ -30,7 +30,7 @@ export default {
         id: this.$route.query.id
       }
       this.$axios
-        .post(`/api/video/getDetail`, data)
+        .post(`/api/audio/getDetail`, data)
         .then(function(res) {
           _this.data = res.data;
         })
@@ -48,12 +48,12 @@ export default {
 }
 
 // 自定义样式top
-#VideoDetail {
-  .video-box {
-    width: 1000px;
+#AudioDetail {
+  .audio-box {
+    width: 600px;
     margin: auto;
   }
-  .video-item {
+  .audio-item {
     width: 100%;
     display: block;
     margin: auto;

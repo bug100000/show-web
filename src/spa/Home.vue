@@ -46,8 +46,8 @@
           </template>
           <MenuItem name="5-1" to="/Home/PictureUpload">图片</MenuItem>
           <MenuItem name="5-2" to="/Home/WordAdd">文字</MenuItem>
-          <MenuItem name="5-3">视频</MenuItem>
-          <MenuItem name="5-4">音频</MenuItem>
+          <MenuItem name="5-3" to="/Home/VideoUpload">视频</MenuItem>
+          <MenuItem name="5-4" to="/Home/AudioUpload">音频</MenuItem>
         </Submenu>
       </Menu>
       <br>
