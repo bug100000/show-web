@@ -19,11 +19,13 @@
 </template>
 
 <script>
+import config from "../../utils/config.js"
 export default {
   name: "Audio",
   data() {
     return {
-      list: []
+      list: [],
+      domain: config.domain
     };
   },
   mounted: function() {
@@ -59,7 +61,7 @@ export default {
 // 自定义样式top
 #Audio {
   .audio-item {
-    width: 700px;
+    width: 800px;
     display: block;
     margin: auto;
     margin-top: 20px;

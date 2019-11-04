@@ -15,11 +15,13 @@
 </template>
 
 <script>
+import config from "../../utils/config.js"
 export default {
   name: "Video",
   data() {
     return {
-      list: []
+      list: [],
+      domain: config.domain
     };
   },
   mounted: function() {
